@@ -1,0 +1,39 @@
+{% load compress %}
+{% load i18n %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% trans "Redirecting…" %}</title>
+    {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static "pretixbase/scss/cachedfiles.scss" %}"/>
+    {% endcompress %}
+    {% compress js %}
+        <script type="text/javascript" src="{% static "jquery/js/jquery-2.1.1.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "pretix_wirecard/js/redirect.js" %}"></script>
+    {% endcompress %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
+        <i class="fa fa-cog big-animated-icon"></i>
+        <h1>{% trans "You will be redirected shortly …" %}</h1>
+        <p>
+            {% trans "If this takes longer than a few seconds, press this button:" %}
+        </p>
+        <noscript>
+            <div class="alert alert-warning">
+                {% trans "Please turn on JavaScript, before you continue." %}
+            </div>
+        </noscript>
+        <form action='https://checkout.wirecard.com/page/init.php' method='post' id="redirect-form">
+            {% for k, v in params.items %}
+                <input type='hidden' name='{{ k }}' value='{{ v }}'/>
+            {% endfor %}
+            <p>
+                <button type="submit" class="btn btn-default">{% trans "Continue" %}</button>
+            </p>
+        </form>
+    </div>
+</body>
+</html>

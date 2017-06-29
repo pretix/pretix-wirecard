@@ -1,0 +1,56 @@
+{% load i18n %}
+
+{% if payment_info %}
+    {% if order.status == "p" %}
+        <p>{% blocktrans trimmed %}
+            This order has been paid via Wirecard.
+        {% endblocktrans %}</p>
+    {% elif order.status == "r" %}
+        <p>{% blocktrans trimmed %}
+            This order has been planned to be paid via Wirecard and has been marked as refunded.
+        {% endblocktrans %}</p>
+    {% else %}
+        <p>{% blocktrans trimmed %}
+            This order has been planned to be paid via Wirecard, but the payment has not yet been completed.
+        {% endblocktrans %}</p>
+    {% endif %}
+    <dl class="dl-horizontal">
+        {% if payment_info.paymentType %}
+            <dt>{% trans "Payment type" %}</dt>
+            <dd>{{ payment_info.paymentType }}</dd>
+        {% endif %}
+        {% if payment_info.orderNumber %}
+            <dt>{% trans "Order number" %}</dt>
+            <dd>{{ payment_info.orderNumber }}</dd>
+        {% endif %}
+        <dt>{% trans "Payment state" %}</dt>
+        <dd>{{ payment_info.paymentState }}</dd>
+        {% if payment_info.amount %}
+            <dt>{% trans "Amount" %}</dt>
+            <dd>{{ payment_info.amount }} {{ payment_info.currency }}</dd>
+        {% endif %}
+        {% if payment_info.message %}
+            <dt>{% trans "Message" %}</dt>
+            <dd>{{ payment_info.message }}</dd>
+        {% endif %}
+        {% if payment_info.financialInstitution %}
+            <dt>{% trans "Financial Institution" %}</dt>
+            <dd>{{ payment_info.financialInstitution }}</dd>
+        {% endif %}
+        {% if payment_info.maskedPan %}
+            <dt>{% trans "Card number" %}</dt>
+            <dd>{{ payment_info.maskedPan }}</dd>
+        {% elif payment_info.anonymousPan %}
+            <dt>{% trans "Card number" %}</dt>
+            <dd>****{{ payment_info.anonymousPan }}</dd>
+        {% endif %}
+        {% if payment_info.cardholder %}
+            <dt>{% trans "Card holder" %}</dt>
+            <dd>{{ payment_info.cardholder }}</dd>
+        {% endif %}
+    </dl>
+{% else %}
+    <p>{% blocktrans trimmed %}
+        This order has been planned to be paid via PayPal, but the payment has not yet been completed.
+    {% endblocktrans %}</p>
+{% endif %}
