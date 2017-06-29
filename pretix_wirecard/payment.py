@@ -50,7 +50,75 @@ class WirecardSettingsHolder(BasePaymentProvider):
                      required=False
                  )),
                 ('method_cc',
-                 forms.BooleanField(label=_('Credit card payments')))
+                 forms.BooleanField(
+                     label=_('Credit card payments'),
+                     required=False,
+                 )),
+                ('method_bancontact',
+                 forms.BooleanField(
+                     label=_('Bancontact / Mister Cash (Belgium)'),
+                     disabled=self.event.currency != 'EUR',
+                     required=False
+                 )),
+                ('method_ekonto',
+                 forms.BooleanField(
+                     label=_('eKonto (Czech Republic)'),
+                     required=False,
+                     disabled=self.event.currency not in ('CZK', 'USD', 'GBP', 'CAD', 'CHF', 'JPY', 'PLN', 'HUF', 'EUR')
+                 )),
+                ('method_epay_bg',
+                 forms.BooleanField(
+                     label=_('ePay.bg (Bulgaria)'),
+                     required=False,
+                     disabled=self.event.currency != 'BGN'
+                 )),
+                ('method_eps',
+                 forms.BooleanField(label=_('eps-Überweisung (Austria)'), required=False)),
+                ('method_giropay',
+                 forms.BooleanField(label=_('Giropay (Germany)'), required=False)),
+                ('method_idl',
+                 forms.BooleanField(label=_('iDEAL (Belgium, Netherlands)'), required=False)),
+                ('method_moneta',
+                 forms.BooleanField(
+                     label=_('moneta.ru (Russia, Ukraine)'),
+                     required=False,
+                     disabled=self.event.currency not in ('EUR', 'USD', 'RUB', 'GBP')
+                 )),
+                ('method_paypal',
+                 forms.BooleanField(label=_('PayPal'), required=False)),
+                ('method_psc',
+                 forms.BooleanField(label=_('paysafecard'), required=False)),
+                ('method_przelewy24',
+                 forms.BooleanField(
+                     label=_('Przelewy24 (Poland)'),
+                     required=False,
+                     disabled=self.event.currency != 'PLN'
+                 )),
+                ('method_poli',
+                 forms.BooleanField(
+                     label=_('POLi (Australia, New Zealand)'),
+                     required=False,
+                     disabled=self.event.currency not in ('GBP', 'AUD', 'NZD')
+                 )),
+                ('method_sepadd',
+                 forms.BooleanField(label=_('SEPA Direct Debit (Europe)'), required=False)),
+                ('method_skrill',
+                 forms.BooleanField(label=_('Skrill Digital Wallet'), required=False)),
+                ('method_sofort',
+                 forms.BooleanField(label=_('SOFORT (Germany, Austria, Switzerland, Belgium, Netherlands, Poland, '
+                                            'Italy, Spain)'), required=False)),
+                ('method_tatra',
+                 forms.BooleanField(label=_('TatraPay (Slovak Republic)'), required=False)),
+                ('method_trustly',
+                 forms.BooleanField(
+                     label=_('Trustly (Poland, Finland, Sweden, Estonia)'),
+                     required=False,
+                     disabled=self.event.currency not in ('CAD', 'CZK', 'DKK', 'EUR', 'GBP',
+                                                          'HUF', 'NOK', 'PLN', 'SEK', 'USD')
+                 )),
+                ('method_trustpay',
+                 forms.BooleanField(label=_('TrustPay (Czech Republic, Hungary, Slovak Republic, Slovenia, Estonia, '
+                                            'Latvia, Lithuania, Turkey)'), required=False)),
             ]
         )
 
@@ -58,6 +126,8 @@ class WirecardSettingsHolder(BasePaymentProvider):
 class WirecardMethod(BasePaymentProvider):
     method = ''
     wc_payment_type = 'SELECT'
+    statement_length = 253
+    order_ref_length = 32
 
     def __init__(self, event: Event):
         super().__init__(event)
@@ -147,10 +217,10 @@ class WirecardMethod(BasePaymentProvider):
             'serviceUrl': self.event.settings.imprint_url,
             'customerStatement': _('ORDER {order} EVENT {event} BY {organizer}').format(
                 event=self.event.slug.upper(), order=order.code, organizer=self.event.organizer.name
-            )[:253],
+            )[:self.statement_length],
             'orderReference': '{code}{id}'.format(
                 code=order.code, id=request.session.get('wirecard_nonce')
-            )[:32],
+            )[:self.order_ref_length],
             'displayText': _('Order {} for event {} by {}').format(
                 order.code, self.event.name, self.event.organizer.name
             ),
@@ -250,3 +320,170 @@ class WirecardCC(WirecardMethod):
     public_name = _('Credit card')
     method = 'cc'
     wc_payment_type = 'CCARD'
+
+
+class WirecardBancontact(WirecardMethod):
+    verbose_name = _('Bancontact via Wirecard')
+    public_name = _('Bancontact')
+    method = 'bancontact'
+    wc_payment_type = 'BANCONTACT_MISTERCASH'
+    statement_length = 25
+    order_ref_length = 10
+
+
+class WirecardEKonto(WirecardMethod):
+    verbose_name = _('eKonto via Wirecard')
+    public_name = _('eKonto')
+    method = 'ekonto'
+    wc_payment_type = 'EKONTO'
+    statement_length = 115
+    order_ref_length = 10
+
+
+class WirecardEPayBG(WirecardMethod):
+    verbose_name = _('ePay.bg via Wirecard')
+    public_name = _('ePay.bg')
+    method = 'epay_bg'
+    wc_payment_type = 'EPAY_BG'
+    statement_length = 100
+    order_ref_length = 64
+
+
+class WirecardEPS(WirecardMethod):
+    verbose_name = _('eps-Überweisung via Wirecard')
+    public_name = _('eps-Überweisung')
+    method = 'eps'
+    wc_payment_type = 'EPS'
+    statement_length = 254
+    order_ref_length = 35
+
+
+class WirecardGiropay(WirecardMethod):
+    verbose_name = _('giropay via Wirecard')
+    public_name = _('giropay')
+    method = 'giropay'
+    wc_payment_type = 'GIROPAY'
+    statement_length = 254
+    order_ref_length = 32
+
+
+class WirecardIdeal(WirecardMethod):
+    verbose_name = _('iDEAL via Wirecard')
+    public_name = _('iDEAL')
+    method = 'idl'
+    wc_payment_type = 'IDL'
+    statement_length = 35
+    order_ref_length = 32
+
+
+class WirecardMoneta(WirecardMethod):
+    verbose_name = _('moneta.ru via Wirecard')
+    public_name = _('moneta.ru')
+    method = 'moneta'
+    wc_payment_type = 'MONETA'
+    statement_length = 25
+    order_ref_length = 10
+
+
+class WirecardPrzelewy24(WirecardMethod):
+    verbose_name = _('Przelewy24 via Wirecard')
+    public_name = _('Przelewy24')
+    method = 'moneta'
+    wc_payment_type = 'MONETA'
+    statement_length = 25
+    order_ref_length = 10
+
+
+class WirecardPOLi(WirecardMethod):
+    verbose_name = _('POLi via Wirecard')
+    public_name = _('POLi')
+    method = 'poli'
+    wc_payment_type = 'POLI'
+    statement_length = 9
+    order_ref_length = 10
+
+
+class WirecardSkrill(WirecardMethod):
+    verbose_name = _('Skrill Digital Wallet via Wirecard')
+    public_name = _('Skrill Digital Wallet')
+    method = 'skrill'
+    wc_payment_type = 'SKRILLWALLET'
+    statement_length = 27
+    order_ref_length = 64
+
+
+class WirecardTatra(WirecardMethod):
+    verbose_name = _('TatraPay via Wirecard')
+    public_name = _('TatraPay')
+    method = 'tatra'
+    wc_payment_type = 'TATRAPAY'
+    statement_length = 20
+    order_ref_length = 64
+
+
+class WirecardTrustly(WirecardMethod):
+    verbose_name = _('Trustly via Wirecard')
+    public_name = _('Trustly')
+    method = 'trustly'
+    wc_payment_type = 'TRUSTLY'
+    statement_length = 225
+    order_ref_length = 10
+
+
+class WirecardTrustPay(WirecardMethod):
+    verbose_name = _('TrustPay via Wirecard')
+    public_name = _('TrustPay')
+    method = 'trustpay'
+    wc_payment_type = 'TRUSTPAY'
+
+
+class WirecardPSC(WirecardMethod):
+    verbose_name = _('paysafecard via Wirecard')
+    public_name = _('paysafecard')
+    method = 'psc'
+    wc_payment_type = 'PSC'
+    statement_length = 254
+    order_ref_length = 128
+
+
+class WirecardPayPal(WirecardMethod):
+    verbose_name = _('PayPal via Wirecard')
+    public_name = _('PayPal')
+    method = 'paypal'
+    wc_payment_type = 'PAYPAL'
+    statement_length = 254
+    order_ref_length = 128
+
+    def params_for_order(self, order, request):
+        params = super().params_for_order(order, request)
+        cnt = 0
+        for i, p in enumerate(order.positions.select_related('item', 'variation')):
+            params['basketItem{}ArticleNumber'.format(i + 1)] = str(p.item.pk) + ('-' + str(p.variation.pk) if p.variation else '')
+            params['basketItem{}Name'.format(i + 1)] = (str(p.item) + (' - ' + str(p.variation) if p.variation else ''))[:128]
+            params['basketItem{}Description'.format(i + 1)] = (str(p.item) + (' - ' + str(p.variation) if p.variation else ''))[:128]
+            params['basketItem{}Quantity'.format(i + 1)] = '1'
+            params['basketItem{}UnitGrossAmount'.format(i + 1)] = str(p.price)
+            params['basketItem{}UnitNetAmount'.format(i + 1)] = str(p.net_price)
+            params['basketItem{}UnitTaxRate'.format(i + 1)] = str(p.tax_rate)
+            params['basketItem{}UnitTaxAmount'.format(i + 1)] = str(p.tax_value)
+            cnt += 1
+        params['basketItems'] = str(cnt)
+        return params
+
+
+class WirecardSEPA(WirecardMethod):
+    verbose_name = _('SEPA Direct Debit via Wirecard')
+    public_name = _('SEPA Direct Debit')
+    method = 'sepadd'
+    wc_payment_type = 'SEPA-DD'
+    statement_length = 254
+    order_ref_length = 128
+
+
+class WirecardSOFORT(WirecardMethod):
+    verbose_name = _('SOFORT via Wirecard')
+    public_name = _('SOFORT')
+    method = 'sofort'
+    wc_payment_type = 'SOFORTUEBERWEISUNG'
+    statement_length = 27
+    order_ref_length = 128

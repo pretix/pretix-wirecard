@@ -48,6 +48,18 @@
             <dt>{% trans "Card holder" %}</dt>
             <dd>{{ payment_info.cardholder }}</dd>
         {% endif %}
+        {% if payment_info.paypalPayerEmail %}
+            <dt>{% trans "Payer" %}</dt>
+            <dd>{{ payment_info.paypalPayerEmail }} ({{ payment_info.paypalPayerID }})</dd>
+        {% endif %}
+        {% if payment_info.mandateId %}
+            <dt>{% trans "Mandate ID" %}</dt>
+            <dd>{{ payment_info.mandateId }}</dd>
+        {% endif %}
+        {% if payment_info.dueDate %}
+            <dt>{% trans "Due date" %}</dt>
+            <dd>{{ payment_info.dueDate }}</dd>
+        {% endif %}
     </dl>
 {% else %}
     <p>{% blocktrans trimmed %}

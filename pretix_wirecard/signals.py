@@ -9,12 +9,16 @@ from django.utils.translation import ugettext_lazy as _
 from pretix.base.middleware import _parse_csp, _merge_csp, _render_csp
 from pretix.base.signals import register_payment_providers, logentry_display, requiredaction_display
 from pretix.presale.signals import process_response
-from .payment import WirecardSettingsHolder, WirecardCC
+from .payment import WirecardSettingsHolder, WirecardCC, WirecardBancontact, WirecardEKonto, WirecardEPayBG, \
+    WirecardEPS, WirecardGiropay, WirecardIdeal, WirecardMoneta, WirecardPayPal, WirecardPOLi, WirecardPrzelewy24, \
+    WirecardPSC, WirecardSEPA, WirecardSkrill, WirecardSOFORT, WirecardTatra, WirecardTrustly, WirecardTrustPay
 
 
 @receiver(register_payment_providers, dispatch_uid="payment_wirecard")
 def register_payment_provider(sender, **kwargs):
-    return [WirecardSettingsHolder, WirecardCC]
+    return [WirecardSettingsHolder, WirecardCC, WirecardBancontact, WirecardEKonto, WirecardEPayBG, WirecardEPS,
+            WirecardGiropay, WirecardIdeal, WirecardMoneta, WirecardPayPal, WirecardPOLi, WirecardPrzelewy24,
+            WirecardPSC, WirecardSEPA, WirecardSkrill, WirecardSOFORT, WirecardTatra, WirecardTrustly, WirecardTrustPay]
 
 
 @receiver(signal=process_response, dispatch_uid="wirecard_middleware_resp")
@@ -36,14 +40,12 @@ def signal_process_response(sender, request: HttpRequest, response: HttpResponse
     return response
 
 
-@receiver(signal=logentry_display, dispatch_uid="stripe_logentry_display")
+@receiver(signal=logentry_display, dispatch_uid="wirecard_logentry_display")
 def pretixcontrol_logentry_display(sender, logentry, **kwargs):
     if logentry.action_type != 'pretix_wirecard.wirecard.event':
         return
 
     data = json.loads(logentry.data)
-    event_type = data.get('type')
-    text = None
     plains = {
         'SUCCESS': _('Charge succeeded.'),
         'PENDING': _('Charge pending.'),
@@ -51,8 +53,7 @@ def pretixcontrol_logentry_display(sender, logentry, **kwargs):
         'FAILURE': _('Charge failed.'),
     }
 
-    if text:
-        return _('Wirecard reported an event: {}').format(text)
+    return _('Wirecard reported an event: {}').format(plains.get(data.get('paymentState'), ''))
 
 
 @receiver(signal=requiredaction_display, dispatch_uid="wirecard_requiredaction_display")
