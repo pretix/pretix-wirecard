@@ -3,15 +3,15 @@
 {% if payment_info %}
     {% if order.status == "p" %}
         <p>{% blocktrans trimmed %}
-            This order has been paid via Wirecard.
+            This order has been paid with {{ provname }}.
         {% endblocktrans %}</p>
     {% elif order.status == "r" %}
         <p>{% blocktrans trimmed %}
-            This order has been planned to be paid via Wirecard and has been marked as refunded.
+            This order has been planned to be paid with {{ provname }} and has been marked as refunded.
         {% endblocktrans %}</p>
     {% else %}
         <p>{% blocktrans trimmed %}
-            This order has been planned to be paid via Wirecard, but the payment has not yet been completed.
+            This order has been planned to be paid with {{ provname }}, but the payment has not yet been completed.
         {% endblocktrans %}</p>
     {% endif %}
     <dl class="dl-horizontal">
@@ -51,6 +51,6 @@
     </dl>
 {% else %}
     <p>{% blocktrans trimmed %}
-        This order has been planned to be paid via PayPal, but the payment has not yet been completed.
+        This order has been planned to be paid with {{ provname }}, but the payment has not yet been completed.
     {% endblocktrans %}</p>
 {% endif %}
