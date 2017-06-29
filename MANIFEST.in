@@ -1,0 +1,3 @@
+recursive-include pretix_wirecard/static *
+recursive-include pretix_wirecard/templates *
+recursive-include pretix_wirecard/locale *
