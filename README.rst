@@ -1,5 +1,5 @@
 pretix Wirecard integration
-==========================
+===========================
 
 This is a plugin for `pretix`_. 
 
@@ -27,6 +27,18 @@ Copyright 2017 Raphael Michel
 
 Released under the terms of the Apache License 2.0
 
+Thanks
+------
+
+The initial development of this official pretix plugin has been funded by our friends at ERNW Insight.
+Thank you very much!
+
+.. image:: _res/logo-ernw-insight.svg
+   :target: https://www.ernw-insight.de/
+   :width: 200px
+
+If you also want to contribute to the development of the open pretix ecosystem by sponsoring the
+development of a feature or plugin, please get in touch at support@rami.io!
 
 .. _pretix: https://github.com/pretix/pretix
 .. _pretix development setup: https://docs.pretix.eu/en/latest/development/setup.html
