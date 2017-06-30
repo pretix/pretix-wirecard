@@ -73,7 +73,7 @@ class WirecardSettingsHolder(BasePaymentProvider):
                      disabled=self.event.currency != 'BGN'
                  )),
                 ('method_eps',
-                 forms.BooleanField(label=_('eps-Überweisung (Austria)'), required=False)),
+                 forms.BooleanField(label=_('eps-Ueberweisung (Austria)'), required=False)),
                 ('method_giropay',
                  forms.BooleanField(label=_('Giropay (Germany)'), required=False)),
                 ('method_idl',
@@ -350,8 +350,8 @@ class WirecardEPayBG(WirecardMethod):
 
 
 class WirecardEPS(WirecardMethod):
-    verbose_name = _('eps-Überweisung via Wirecard')
-    public_name = _('eps-Überweisung')
+    verbose_name = _('eps-Ueberweisung via Wirecard')
+    public_name = _('eps-Ueberweisung')
     method = 'eps'
     wc_payment_type = 'EPS'
     statement_length = 254

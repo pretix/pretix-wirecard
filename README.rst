@@ -37,7 +37,7 @@ Thank you very much!
    :target: https://www.ernw-insight.de/
 
 If you also want to contribute to the development of the open pretix ecosystem by sponsoring the
-development of a feature or plugin, please get in touch at support@rami.io!
+development of a feature or plugin, please get in touch at support@pretix.eu!
 
 .. _pretix: https://github.com/pretix/pretix
 .. _pretix development setup: https://docs.pretix.eu/en/latest/development/setup.html
