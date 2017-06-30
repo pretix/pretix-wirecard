@@ -33,9 +33,8 @@ Thanks
 The initial development of this official pretix plugin has been funded by our friends at ERNW Insight.
 Thank you very much!
 
-.. image:: _res/logo-ernw-insight.svg
+.. image:: _res/logo-ernw-insight.png
    :target: https://www.ernw-insight.de/
-   :width: 200px
 
 If you also want to contribute to the development of the open pretix ecosystem by sponsoring the
 development of a feature or plugin, please get in touch at support@rami.io!
