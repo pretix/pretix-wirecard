@@ -16,7 +16,7 @@ from pretix.base.models import Event
 from pretix.base.payment import BasePaymentProvider, PaymentException
 from pretix.base.services.orders import mark_order_refunded
 from pretix.base.settings import SettingsSandbox
-from pretix.multidomain.urlreverse import eventreverse
+from pretix.multidomain.urlreverse import eventreverse, build_absolute_uri
 
 logger = logging.getLogger(__name__)
 
@@ -193,23 +193,23 @@ class WirecardMethod(BasePaymentProvider):
             'amount': str(order.total),
             'currency': self.event.currency,
             'orderDescription': _('Order {event}-{code}').format(event=self.event.slug.upper(), code=order.code),
-            'successUrl': eventreverse(self.event, 'plugins:pretix_wirecard:return', kwargs={
+            'successUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:return', kwargs={
                 'order': order.code,
                 'hash': hash,
             }),
-            'cancelUrl': eventreverse(self.event, 'plugins:pretix_wirecard:return', kwargs={
+            'cancelUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:return', kwargs={
                 'order': order.code,
                 'hash': hash,
             }),
-            'failureUrl': eventreverse(self.event, 'plugins:pretix_wirecard:return', kwargs={
+            'failureUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:return', kwargs={
                 'order': order.code,
                 'hash': hash,
             }),
-            'confirmUrl': eventreverse(self.event, 'plugins:pretix_wirecard:confirm', kwargs={
+            'confirmUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:confirm', kwargs={
                 'order': order.code,
                 'hash': hash,
             }).replace(':8000', ''),  # TODO: Remove
-            'pendingUrl': eventreverse(self.event, 'plugins:pretix_wirecard:confirm', kwargs={
+            'pendingUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:confirm', kwargs={
                 'order': order.code,
                 'hash': hash,
             }),
