@@ -10,7 +10,7 @@ class PluginApp(AppConfig):
         author = 'Raphael Michel'
         description = 'This plugin integrates Wirecard payment methods with pretix'
         visible = True
-        version = '0.5.0'
+        version = '0.5.1'
 
     def ready(self):
         from . import signals  # NOQA
