@@ -21,6 +21,18 @@ from pretix.multidomain.urlreverse import eventreverse, build_absolute_uri
 logger = logging.getLogger(__name__)
 
 
+class RefundForm(forms.Form):
+    auto_refund = forms.ChoiceField(
+        initial='auto',
+        label=_('Refund automatically?'),
+        choices=(
+            ('auto', _('Automatically refund charge with Wirecard')),
+            ('manual', _('Do not send refund instruction to Wirecard, only mark as refunded in pretix'))
+        ),
+        widget=forms.RadioSelect,
+    )
+
+
 class WirecardSettingsHolder(BasePaymentProvider):
     identifier = 'wirecard'
     verbose_name = _('Wirecard Checkout Page')
@@ -259,11 +271,16 @@ class WirecardMethod(BasePaymentProvider):
     def refund_available(self):
         return bool(self.settings.get('toolkit_password'))
 
-    def order_control_refund_render(self, order) -> str:
+    def order_control_refund_render(self, order, request) -> str:
         if self.refund_available:
-            return '<div class="alert alert-info">%s</div>' % _('The money will be automatically refunded.')
+            template = get_template('pretix_wirecard/control_refund.html')
+            ctx = {
+                'request': request,
+                'form': self._refund_form(request),
+            }
+            return template.render(ctx)
         else:
-            return super().order_control_refund_render(order)
+            return super().order_control_refund_render(order, request)
 
     def _refund(self, order_number, amount, currency, language):
         params = {
@@ -289,6 +306,9 @@ class WirecardMethod(BasePaymentProvider):
             logger.error('Wirecard error during refund: %s' % r.text)
             raise PaymentException(_('Wirecard reported an error: {msg}').format(msg=retvals['message'][0]))
 
+    def _refund_form(self, request):
+        return RefundForm(data=request.POST if request.method == "POST" else None)
+
     def order_control_refund_perform(self, request, order) -> "bool|str":
         if order.payment_info:
             payment_info = json.loads(order.payment_info)
@@ -299,6 +319,16 @@ class WirecardMethod(BasePaymentProvider):
             mark_order_refunded(order, user=request.user)
             messages.warning(request, _('We were unable to transfer the money back automatically. '
                                         'Please get in touch with the customer and transfer it back manually.'))
+            return
+
+        f = self._refund_form(request)
+        if not f.is_valid():
+            messages.error(request, _('Your input was invalid, please try again.'))
+            return
+        elif f.cleaned_data.get('auto_refund') == 'manual':
+            order = mark_order_refunded(order, user=request.user)
+            order.payment_manual = True
+            order.save()
             return
 
         try:
