@@ -11,13 +11,13 @@ from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.views import View
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
 from pretix.base.models import Order, Quota, RequiredAction
 from pretix.base.services.orders import mark_order_paid
 from pretix.multidomain.urlreverse import eventreverse
-from pretix.presale.utils import event_view
 
 logger = logging.getLogger('pretix_wirecard')
 
@@ -41,7 +41,7 @@ class WirecardOrderView:
         return self.request.event.get_payment_providers()[self.order.payment_provider]
 
 
-@method_decorator(event_view, name='dispatch')
+@method_decorator(xframe_options_exempt, 'dispatch')
 class RedirectView(WirecardOrderView, TemplateView):
     template_name = 'pretix_wirecard/redirecting.html'
 
@@ -86,7 +86,6 @@ def process_result(request, order, prov):
                 )
 
 
-@method_decorator(event_view, name='dispatch')
 class ConfirmView(WirecardOrderView, View):
     def post(self, request, *args, **kwargs):
         if not validate_fingerprint(request, self.pprov):
@@ -96,9 +95,17 @@ class ConfirmView(WirecardOrderView, View):
         return HttpResponse('<QPAY-CONFIRMATION-RESPONSE result="OK" />')
 
 
-@method_decorator(event_view, name='dispatch')
 @method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(xframe_options_exempt, 'dispatch')
 class ReturnView(WirecardOrderView, View):
+
+    def get(self, request, *args, **kwargs):
+        messages.error(
+            request, _('The payment failed without an error message. '
+                            'You can click below to try again.')
+        )
+        return self._redirect_to_order()
+
     def post(self, request, *args, **kwargs):
         if not validate_fingerprint(request, self.pprov):
             messages.error(self.request, _('Sorry, we could not validate the payment result. Please try again or '
