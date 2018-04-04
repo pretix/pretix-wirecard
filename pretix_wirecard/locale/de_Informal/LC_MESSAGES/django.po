@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-06 16:59+0100\n"
-"PO-Revision-Date: 2018-03-08 17:06+0000\n"
+"PO-Revision-Date: 2018-04-04 20:00+0000\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: German (informal) <https://translate.pretix.eu/projects/pretix"
 "/pretix-plugin-wirecard/de_Informal/>\n"
@@ -35,7 +35,7 @@ msgstr "Wirecard Checkout Page"
 
 #: pretix_wirecard/payment.py:47
 msgid "Customer ID"
-msgstr "Kunden-ID"
+msgstr "Kundennummer"
 
 #: pretix_wirecard/payment.py:51
 msgid "Secret"
