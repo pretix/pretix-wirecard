@@ -7,7 +7,9 @@ from django.urls import resolve
 from django.utils.translation import ugettext_lazy as _
 
 from pretix.base.middleware import _parse_csp, _merge_csp, _render_csp
-from pretix.base.signals import register_payment_providers, logentry_display, requiredaction_display
+from pretix.base.shredder import BaseDataShredder
+from pretix.base.signals import register_payment_providers, logentry_display, requiredaction_display, \
+    register_data_shredders
 from pretix.presale.signals import process_response
 from .payment import WirecardSettingsHolder, WirecardCC, WirecardBancontact, WirecardEKonto, WirecardEPayBG, \
     WirecardEPS, WirecardGiropay, WirecardIdeal, WirecardMoneta, WirecardPayPal, WirecardPOLi, WirecardPrzelewy24, \
@@ -68,3 +70,33 @@ def pretixcontrol_action_display(sender, action, request, **kwargs):
 
     ctx = {'data': data, 'event': sender, 'action': action}
     return template.render(ctx, request)
+
+
+class PaymentLogsShredder(BaseDataShredder):
+    verbose_name = _('Wirecard payment history')
+    identifier = 'wirecard_logs'
+    description = _('This will remove payment-related history information. No download will be offered.')
+
+    def generate_files(self):
+        pass
+
+    def shred_data(self):
+        for le in self.event.logentry_set.filter(action_type="pretix_wirecard.wirecard.event").exclude(data=""):
+            d = le.parsed_data
+            new = {
+                '_shreded': True
+            }
+            for k in ('paymentState', 'amount', 'authenticated', 'paymentType', 'pretix_orderCode', 'currency',
+                      'orderNumber', 'financialInstitution', 'message', 'mandateId', 'dueDate'):
+                if k in d:
+                    new[k] = d[k]
+            le.data = json.dumps(new)
+            le.shredded = True
+            le.save(update_fields=['data', 'shredded'])
+
+
+@receiver(register_data_shredders, dispatch_uid="wirecard_shredders")
+def register_shredder(sender, **kwargs):
+    return [
+        PaymentLogsShredder,
+    ]

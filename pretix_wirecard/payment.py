@@ -12,7 +12,7 @@ from django.template.loader import get_template
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
-from pretix.base.models import Event
+from pretix.base.models import Event, Order
 from pretix.base.payment import BasePaymentProvider, PaymentException
 from pretix.base.services.orders import mark_order_refunded
 from pretix.base.settings import SettingsSandbox
@@ -37,11 +37,12 @@ class WirecardSettingsHolder(BasePaymentProvider):
     identifier = 'wirecard'
     verbose_name = _('Wirecard Checkout Page')
     is_enabled = False
+    is_meta = True
 
     @property
     def settings_form_fields(self):
-        return OrderedDict(
-            list(super().settings_form_fields.items()) + [
+        d = OrderedDict(
+            [
                 ('customer_id',
                  forms.CharField(
                      label=_('Customer ID'),
@@ -131,8 +132,10 @@ class WirecardSettingsHolder(BasePaymentProvider):
                 ('method_trustpay',
                  forms.BooleanField(label=_('TrustPay (Czech Republic, Hungary, Slovak Republic, Slovenia, Estonia, '
                                             'Latvia, Lithuania, Turkey)'), required=False)),
-            ]
+            ] + list(super().settings_form_fields.items())
         )
+        d.move_to_end('_enabled', False)
+        return d
 
 
 class WirecardMethod(BasePaymentProvider):
@@ -343,6 +346,20 @@ class WirecardMethod(BasePaymentProvider):
                                       'support if the problem persists.'))
         else:
             mark_order_refunded(order, user=request.user)
+
+    def shred_payment_info(self, order: Order):
+        if not order.payment_info:
+            return
+        d = json.loads(order.payment_info)
+        new = {
+            '_shreded': True
+        }
+        for k in ('paymentState', 'amount', 'authenticated', 'paymentType', 'pretix_orderCode', 'currency',
+                  'orderNumber', 'financialInstitution', 'message', 'mandateId', 'dueDate'):
+            if k in d:
+                new[k] = d[k]
+        order.payment_info = json.dumps(new)
+        order.save(update_fields=['payment_info'])
 
 
 class WirecardCC(WirecardMethod):
