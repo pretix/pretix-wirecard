@@ -3,27 +3,31 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-06 16:59+0100\n"
-"PO-Revision-Date: \n"
+"PO-Revision-Date: 2018-04-04 21:00+0000\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
-"Language-Team: \n"
+"Language-Team: German <https://translate.pretix.eu/projects/pretix/pretix-"
+"plugin-wirecard/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.19.1\n"
 
 #: pretix_wirecard/payment.py:27
 msgid "Refund automatically?"
-msgstr ""
+msgstr "Geld zurückbuchen?"
 
 #: pretix_wirecard/payment.py:29
 msgid "Automatically refund charge with Wirecard"
-msgstr ""
+msgstr "Automatisch über Wirecard zurückerstatten"
 
 #: pretix_wirecard/payment.py:30
 msgid ""
 "Do not send refund instruction to Wirecard, only mark as refunded in pretix"
 msgstr ""
+"Rückerstattung nicht an Wirecard übermitteln, nur in pretix als erstattet "
+"markieren"
 
 #: pretix_wirecard/payment.py:38
 msgid "Wirecard Checkout Page"
@@ -31,7 +35,7 @@ msgstr "Wirecard Checkout Page"
 
 #: pretix_wirecard/payment.py:47
 msgid "Customer ID"
-msgstr "Kunden-ID"
+msgstr "Kundennummer"
 
 #: pretix_wirecard/payment.py:51
 msgid "Secret"
@@ -158,7 +162,7 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:326
 msgid "Your input was invalid, please try again."
-msgstr ""
+msgstr "Deine Eingabe war ungültig, bitte erneut versuchen."
 
 #: pretix_wirecard/payment.py:342
 msgid ""
@@ -456,16 +460,12 @@ msgid "Continue"
 msgstr "Fortfahren"
 
 #: pretix_wirecard/views.py:104
-#, fuzzy
-#| msgid ""
-#| "The payment failed with the following message: {message}. You can click "
-#| "below to try again."
 msgid ""
 "The payment failed without an error message. You can click below to try "
 "again."
 msgstr ""
-"Die Zahlung ist mit der folgenden Meldung fehlgeschlagen: {message}. Sie "
-"können es mit dem untenstehenden Button erneut versuchen."
+"Die Zahlung ist ohne Fehlermeldung fehlgeschlagen. Du kannst es mit dem "
+"untenstehenden Button erneut versuchen."
 
 #: pretix_wirecard/views.py:111
 msgid ""
