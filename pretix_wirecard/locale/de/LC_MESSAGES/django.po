@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-02 16:04+0200\n"
-"PO-Revision-Date: 2018-04-04 21:00+0000\n"
+"PO-Revision-Date: 2018-05-02 15:22+0000\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: German <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-wirecard/de/>\n"
@@ -325,16 +325,16 @@ msgid "Wirecard reported an event: {}"
 msgstr "Wirecard hat ein Ereignis gemeldet: {}"
 
 #: pretix_wirecard/signals.py:76
-#, fuzzy
-#| msgid "Credit card payments"
 msgid "Wirecard payment history"
-msgstr "Kreditkartenzahlung"
+msgstr "Wirecard-Zahlungsverlauf"
 
 #: pretix_wirecard/signals.py:78
 msgid ""
 "This will remove payment-related history information. No download will be "
 "offered."
 msgstr ""
+"Dies entfernt persönliche Daten aus eingegangenen Zahlungsmitteilungen. Es "
+"wird kein Download angeboten."
 
 #: pretix_wirecard/templates/pretix_wirecard/action_overpaid.html:5
 #, python-format
