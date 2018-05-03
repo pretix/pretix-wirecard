@@ -25,7 +25,7 @@ cmdclass = {
 
 setup(
     name='pretix-wirecard',
-    version='0.5.2',
+    version='0.6.0',
     description='This plugin integrates Wirecard payment methods with pretix',
     long_description=long_description,
     url='https://github.com/pretix/pretix-wirecard',
