@@ -8,136 +8,146 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-02 16:04+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2018-07-17 22:00+0000\n"
+"Last-Translator: Yunus Fırat Pişkin <firat.piskin@idvlabs.com>\n"
+"Language-Team: Turkish <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-wirecard/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.0.1\n"
 
 #: pretix_wirecard/payment.py:27
 msgid "Refund automatically?"
-msgstr ""
+msgstr "Otomatik olarak iade?"
 
 #: pretix_wirecard/payment.py:29
 msgid "Automatically refund charge with Wirecard"
-msgstr ""
+msgstr "Wirecard ile otomatik olarak ücret iadesi"
 
 #: pretix_wirecard/payment.py:30
 msgid ""
 "Do not send refund instruction to Wirecard, only mark as refunded in pretix"
 msgstr ""
+"Geri ödeme talimatını Wirecard'a göndermeyin, sadece pretix'e iade edilmiş "
+"olarak işaretleyin"
 
 #: pretix_wirecard/payment.py:38
 msgid "Wirecard Checkout Page"
-msgstr ""
+msgstr "Wirecard Ödeme Sayfası"
 
 #: pretix_wirecard/payment.py:48
 msgid "Customer ID"
-msgstr ""
+msgstr "Müşteri Kimliği"
 
 #: pretix_wirecard/payment.py:52
 msgid "Secret"
-msgstr ""
+msgstr "Gizli"
 
 #: pretix_wirecard/payment.py:56
 msgid "Shop ID"
-msgstr ""
+msgstr "Mağaza Kimliği"
 
 #: pretix_wirecard/payment.py:61
 msgid "Toolkit password"
-msgstr ""
+msgstr "Araç seti şifresi"
 
 #: pretix_wirecard/payment.py:62
 msgid "Optional. Required to automatically initiate refunds."
 msgstr ""
+"İsteğe bağlı. Para iadelerini otomatik olarak başlatmak için gereklidir."
 
 #: pretix_wirecard/payment.py:67
 msgid "Credit card payments"
-msgstr ""
+msgstr "Kredi kartı ödemeleri"
 
 #: pretix_wirecard/payment.py:72
 msgid "Bancontact / Mister Cash (Belgium)"
-msgstr ""
+msgstr "Bancontact / Mister Cash (Belçika)"
 
 #: pretix_wirecard/payment.py:78
 msgid "eKonto (Czech Republic)"
-msgstr ""
+msgstr "eKonto (Çek Cumhuriyeti)"
 
 #: pretix_wirecard/payment.py:84
 msgid "ePay.bg (Bulgaria)"
-msgstr ""
+msgstr "ePay.bg (Bulgaristan)"
 
 #: pretix_wirecard/payment.py:89
 msgid "eps-Ueberweisung (Austria)"
-msgstr ""
+msgstr "eps-Ueberweisung (Avusturya)"
 
 #: pretix_wirecard/payment.py:91
 msgid "Giropay (Germany)"
-msgstr ""
+msgstr "Giropay (Almanya)"
 
 #: pretix_wirecard/payment.py:93
 msgid "iDEAL (Belgium, Netherlands)"
-msgstr ""
+msgstr "iDEAL (Belçika, Hollanda)"
 
 #: pretix_wirecard/payment.py:96
 msgid "moneta.ru (Russia, Ukraine)"
-msgstr ""
+msgstr "moneta.ru (Rusya, Ukrayna)"
 
 #: pretix_wirecard/payment.py:101 pretix_wirecard/payment.py:498
 msgid "PayPal"
-msgstr ""
+msgstr "PayPal"
 
 #: pretix_wirecard/payment.py:103 pretix_wirecard/payment.py:489
 msgid "paysafecard"
-msgstr ""
+msgstr "paysafecard"
 
 #: pretix_wirecard/payment.py:106
 msgid "Przelewy24 (Poland)"
-msgstr ""
+msgstr "Przelewy24 (Polonya)"
 
 #: pretix_wirecard/payment.py:112
 msgid "POLi (Australia, New Zealand)"
-msgstr ""
+msgstr "POLi (Avustralya, Yeni Zelanda)"
 
 #: pretix_wirecard/payment.py:117
 msgid "SEPA Direct Debit (Europe)"
-msgstr ""
+msgstr "SEPA Doğrudan Borç (Avrupa)"
 
 #: pretix_wirecard/payment.py:119 pretix_wirecard/payment.py:455
 msgid "Skrill Digital Wallet"
-msgstr ""
+msgstr "Skrill Dijital Cüzdan"
 
 #: pretix_wirecard/payment.py:121
 msgid ""
 "SOFORT (Germany, Austria, Switzerland, Belgium, Netherlands, Poland, Italy, "
 "Spain)"
 msgstr ""
+"SOFORT (Almanya, Avusturya, İsviçre, Belçika, Hollanda, Polonya, İtalya, "
+"İspanya)"
 
 #: pretix_wirecard/payment.py:124
 msgid "TatraPay (Slovak Republic)"
-msgstr ""
+msgstr "TatraPay (Slovak Cumhuriyeti)"
 
 #: pretix_wirecard/payment.py:127
 msgid "Trustly (Poland, Finland, Sweden, Estonia)"
-msgstr ""
+msgstr "Trustly (Polonya, Finlandiya, İsveç, Estonya)"
 
 #: pretix_wirecard/payment.py:133
 msgid ""
 "TrustPay (Czech Republic, Hungary, Slovak Republic, Slovenia, Estonia, "
 "Latvia, Lithuania, Turkey)"
 msgstr ""
+"TrustPay (Çek Cumhuriyeti, Macaristan, Slovakya, Slovenya, Estonya, Letonya, "
+"Litvanya, Türkiye)"
 
 #: pretix_wirecard/payment.py:210
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "Order {event}-{code}"
-msgstr ""
+msgstr "Sipariş {event} - {code}"
 
 #: pretix_wirecard/payment.py:233
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "ORDER {order} EVENT {event} BY {organizer}"
-msgstr ""
+msgstr "SİPARİŞ {order} ETKİNLİK {event} BY {organizer}"
 
 #: pretix_wirecard/payment.py:239
 msgid "Order {} for event {} by {}"
@@ -146,47 +156,51 @@ msgstr ""
 #: pretix_wirecard/payment.py:310
 #, python-brace-format
 msgid "Wirecard reported an error: {msg}"
-msgstr ""
+msgstr "Wirecard bir hata bildirdi:{msg}"
 
 #: pretix_wirecard/payment.py:323
 msgid ""
 "We were unable to transfer the money back automatically. Please get in touch "
 "with the customer and transfer it back manually."
 msgstr ""
+"Parayı otomatik olarak geri transfer edemedik. Lütfen müşteri ile temasa "
+"geçin ve manuel olarak geri gönderin."
 
 #: pretix_wirecard/payment.py:329
 msgid "Your input was invalid, please try again."
-msgstr ""
+msgstr "Girişiniz geçersiz, lütfen tekrar deneyin."
 
 #: pretix_wirecard/payment.py:345
 msgid ""
 "We had trouble communicating with Wirecard. Please try again and contact "
 "support if the problem persists."
 msgstr ""
+"Wirecard ile iletişimde sorun vardı. Lütfen tekrar deneyin ve sorun devam "
+"ederse desteğe başvurun."
 
 #: pretix_wirecard/payment.py:366
 msgid "Credit card via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden kredi kartı"
 
 #: pretix_wirecard/payment.py:367
 msgid "Credit card"
-msgstr ""
+msgstr "Kredi kartı"
 
 #: pretix_wirecard/payment.py:373
 msgid "Bancontact via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden yasak iletişim"
 
 #: pretix_wirecard/payment.py:374
 msgid "Bancontact"
-msgstr ""
+msgstr "Yasak iletişim"
 
 #: pretix_wirecard/payment.py:382
 msgid "eKonto via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden e-hesap"
 
 #: pretix_wirecard/payment.py:383
 msgid "eKonto"
-msgstr ""
+msgstr "e-hesap"
 
 #: pretix_wirecard/payment.py:391
 msgid "ePay.bg via Wirecard"
@@ -198,142 +212,148 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:400
 msgid "eps-Ueberweisung via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden eps-Ueberweisung"
 
 #: pretix_wirecard/payment.py:401
 msgid "eps-Ueberweisung"
-msgstr ""
+msgstr "eps-Ueberweisung"
 
 #: pretix_wirecard/payment.py:409
 msgid "giropay via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden giropay"
 
 #: pretix_wirecard/payment.py:410
 msgid "giropay"
-msgstr ""
+msgstr "giropay"
 
 #: pretix_wirecard/payment.py:418
 msgid "iDEAL via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden iDEAL"
 
 #: pretix_wirecard/payment.py:419
 msgid "iDEAL"
-msgstr ""
+msgstr "iDEAL"
 
 #: pretix_wirecard/payment.py:427
 msgid "moneta.ru via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinde moneta.ru"
 
 #: pretix_wirecard/payment.py:428
 msgid "moneta.ru"
-msgstr ""
+msgstr "moneta.ru"
 
 #: pretix_wirecard/payment.py:436
 msgid "Przelewy24 via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden Przelewy24"
 
 #: pretix_wirecard/payment.py:437
 msgid "Przelewy24"
-msgstr ""
+msgstr "Przelewy24"
 
 #: pretix_wirecard/payment.py:445
 msgid "POLi via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden POLi"
 
 #: pretix_wirecard/payment.py:446
 msgid "POLi"
-msgstr ""
+msgstr "POLi"
 
 #: pretix_wirecard/payment.py:454
 msgid "Skrill Digital Wallet via Wirecard"
-msgstr ""
+msgstr "Wirecard ile Skrill Dijital Cüzdan"
 
 #: pretix_wirecard/payment.py:463
 msgid "TatraPay via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden TatraPay"
 
 #: pretix_wirecard/payment.py:464
 msgid "TatraPay"
-msgstr ""
+msgstr "TatraPay"
 
 #: pretix_wirecard/payment.py:472
+#, fuzzy
 msgid "Trustly via Wirecard"
-msgstr ""
+msgstr "Wirecard ile güvenilir bir şekilde"
 
 #: pretix_wirecard/payment.py:473
 msgid "Trustly"
-msgstr ""
+msgstr "Trustly"
 
 #: pretix_wirecard/payment.py:481
 msgid "TrustPay via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden TrustPay"
 
 #: pretix_wirecard/payment.py:482
 msgid "TrustPay"
-msgstr ""
+msgstr "TrustPay"
 
 #: pretix_wirecard/payment.py:488
 msgid "paysafecard via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden paysafecard"
 
 #: pretix_wirecard/payment.py:497
 msgid "PayPal via Wirecard"
-msgstr ""
+msgstr "Wirecard ile PayPal"
 
 #: pretix_wirecard/payment.py:522
 msgid "SEPA Direct Debit via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden SEPA Doğrudan Ödeme"
 
 #: pretix_wirecard/payment.py:523
 msgid "SEPA Direct Debit"
-msgstr ""
+msgstr "SEPA Doğrudan Ödeme"
 
 #: pretix_wirecard/payment.py:531
 msgid "SOFORT via Wirecard"
-msgstr ""
+msgstr "Wirecard üzerinden SOFORT"
 
 #: pretix_wirecard/payment.py:532
 msgid "SOFORT"
-msgstr ""
+msgstr "SOFORT"
 
 #: pretix_wirecard/signals.py:52
 msgid "Charge succeeded."
-msgstr ""
+msgstr "Yükleme başarılı oldu."
 
 #: pretix_wirecard/signals.py:53
 msgid "Charge pending."
-msgstr ""
+msgstr "Ücret beklemede."
 
 #: pretix_wirecard/signals.py:54
 msgid "Charge canceled."
-msgstr ""
+msgstr "Ücret iptal edildi."
 
 #: pretix_wirecard/signals.py:55
 msgid "Charge failed."
-msgstr ""
+msgstr "Yükleme başarısız oldu."
 
 #: pretix_wirecard/signals.py:58
 msgid "Wirecard reported an event: {}"
-msgstr ""
+msgstr "Wirecard bir etkinlik bildirdi: {}"
 
 #: pretix_wirecard/signals.py:76
 msgid "Wirecard payment history"
-msgstr ""
+msgstr "Wirecard ödeme geçmişi"
 
 #: pretix_wirecard/signals.py:78
 msgid ""
 "This will remove payment-related history information. No download will be "
 "offered."
 msgstr ""
+"Bu ödeme ile ilgili geçmiş bilgileri kaldırılacaktır. Hiçbir indirme "
+"yapılmayacaktır."
 
 #: pretix_wirecard/templates/pretix_wirecard/action_overpaid.html:5
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The Wirecard transaction %(payment)s has succeeded, but the order %(order)s "
 "is expired and the product was sold out in the meantime. Therefore, the "
 "payment could not be acceped. Please contact the user and refund the money "
 "via Wirecard's interface."
 msgstr ""
+"Wirecard işlemi %(payment) başarılı oldu, ancak siparişin %(order) süresi "
+"doldu ve bu sırada ürün satıldı. Bu nedenle, ödeme alınamadı. Lütfen "
+"kullanıcıyla iletişime geçin ve Wirecard'ın arayüzü ile parayı iade edin."
 
 #: pretix_wirecard/templates/pretix_wirecard/checkout_payment_confirm.html:3
 #: pretix_wirecard/templates/pretix_wirecard/checkout_payment_form.html:3
@@ -341,6 +361,8 @@ msgid ""
 "After you submitted your order, we will redirect you to Wirecard to complete "
 "your payment. You will then be redirected back here to get your tickets."
 msgstr ""
+"Siparişinizi gönderdikten sonra, ödemenizi tamamlamak için sizi Wirecard'a "
+"yönlendireceğiz. Biletlerinizi almak için buraya geri yönlendirileceksiniz."
 
 #: pretix_wirecard/templates/pretix_wirecard/checkout_payment_form.html:9
 msgid "You need to turn on JavaScript for this payment method to work."
@@ -349,14 +371,16 @@ msgstr ""
 #: pretix_wirecard/templates/pretix_wirecard/control.html:5
 #, python-format
 msgid "This order has been paid with %(provname)s."
-msgstr ""
+msgstr "Bu sipariş %(provname) ile ödenmiştir."
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:9
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "This order has been planned to be paid with %(provname)s and has been marked "
 "as refunded."
 msgstr ""
+"Bu siparişin %(provname) ile ödenmesi planlandı ve iade edildi olarak "
+"işaretlendi."
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:13
 #: pretix_wirecard/templates/pretix_wirecard/control.html:65
@@ -365,99 +389,110 @@ msgid ""
 "This order has been planned to be paid with %(provname)s, but the payment "
 "has not yet been completed."
 msgstr ""
+"Bu siparişin %(provname) ile ödenmesi planlandı, ancak ödeme henüz "
+"tamamlanmadı."
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:19
 msgid "Payment type"
-msgstr ""
+msgstr "Ödeme türü"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:23
 msgid "Order number"
-msgstr ""
+msgstr "Sipariş numarası"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:26
 msgid "Payment state"
-msgstr ""
+msgstr "Ödeme durumu"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:29
 msgid "Amount"
-msgstr ""
+msgstr "Tutar"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:33
 msgid "Message"
-msgstr ""
+msgstr "Mesaj"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:37
 msgid "Financial Institution"
-msgstr ""
+msgstr "Finansal kurum"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:41
 #: pretix_wirecard/templates/pretix_wirecard/control.html:44
 msgid "Card number"
-msgstr ""
+msgstr "Kart numarası"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:48
 msgid "Card holder"
-msgstr ""
+msgstr "kart sahibi"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:52
 msgid "Payer"
-msgstr ""
+msgstr "ödeyici"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:56
 msgid "Mandate ID"
-msgstr ""
+msgstr "Yetkilendirme Kimliği"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:60
 msgid "Due date"
-msgstr ""
+msgstr "Bitiş tarihi"
 
 #: pretix_wirecard/templates/pretix_wirecard/pending.html:4
 msgid ""
 "Our attempt to execute your payment has failed. Please try again or contact "
 "us."
 msgstr ""
+"Ödemenizi gerçekleştirme girişimimiz başarısız oldu. Lütfen tekrar deneyin "
+"veya bizimle iletişime geçin."
 
 #: pretix_wirecard/templates/pretix_wirecard/pending.html:8
 msgid ""
 "We're waiting for an answer regarding your payment. Please contact us, if "
 "this takes more than a few hours."
 msgstr ""
+"Ödemenizle ilgili bir cevap bekliyoruz. Bu birkaç saatten fazla sürerse, "
+"lütfen bize ulaşın."
 
 #: pretix_wirecard/templates/pretix_wirecard/redirecting.html:7
 msgid "Redirecting..."
-msgstr ""
+msgstr "Yönlendiriliyor ..."
 
 #: pretix_wirecard/templates/pretix_wirecard/redirecting.html:20
 msgid "You will be redirected shortly."
-msgstr ""
+msgstr "Kısa bir süre sonra yönlendirileceksiniz."
 
 #: pretix_wirecard/templates/pretix_wirecard/redirecting.html:22
 msgid "If this takes longer than a few seconds, press this button:"
-msgstr ""
+msgstr "Bu işlem birkaç saniyeden uzun sürerse, şu butona basın:"
 
 #: pretix_wirecard/templates/pretix_wirecard/redirecting.html:26
 msgid "Please turn on JavaScript, before you continue."
-msgstr ""
+msgstr "Devam etmeden önce lütfen JavaScript'i açın."
 
 #: pretix_wirecard/templates/pretix_wirecard/redirecting.html:34
 msgid "Continue"
-msgstr ""
+msgstr "Devam et"
 
 #: pretix_wirecard/views.py:104
 msgid ""
 "The payment failed without an error message. You can click below to try "
 "again."
 msgstr ""
+"Ödeme bir hata mesajı olmadan başarısız oldu. Tekrar denemek için aşağıyı "
+"tıklayabilirsiniz."
 
 #: pretix_wirecard/views.py:111
 msgid ""
 "Sorry, we could not validate the payment result. Please try again or contact "
 "the event organizer to check if your payment was successful."
 msgstr ""
+"Maalesef ödeme sonucunu doğrulayamadık. Ödemenizin başarılı olup olmadığını "
+"öğrenmek için lütfen tekrar deneyin veya etkinlik düzenleyicisine başvurun."
 
 #: pretix_wirecard/views.py:117
 msgid "The payment process was canceled. You can click below to try again."
 msgstr ""
+"Ödeme işlemi iptal edildi. Tekrar denemek için aşağıya tıklayabilirsiniz."
 
 #: pretix_wirecard/views.py:122
 #, python-brace-format
@@ -465,6 +500,8 @@ msgid ""
 "The payment failed with the following message: {message}. You can click "
 "below to try again."
 msgstr ""
+"Ödeme şu mesajla başarısız oldu: {message} . Tekrar denemek için aşağıyı "
+"tıklayabilirsiniz."
 
 #: pretix_wirecard/views.py:128
 msgid ""
@@ -472,9 +509,14 @@ msgid ""
 "We will send you an email once your payment is completed. If this takes "
 "longer than expected, contact the event organizer."
 msgstr ""
+"Ödemeniz işleme başladı ve tamamlanması biraz zaman alacak. Ödemeniz "
+"tamamlandığında size bir e-posta göndereceğiz. Bu beklenenden uzun sürerse "
+"etkinlik düzenleyicisine başvurun."
 
 #: pretix_wirecard/views.py:139
 msgid ""
 "Sorry, there was an error in the payment process. Please check the link in "
 "your emails to continue."
 msgstr ""
+"Üzgünüz, ödeme sürecinde bir hata oluştu. Devam etmek için lütfen e-"
+"postanızdaki bağlantıyı kontrol edin."
