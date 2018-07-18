@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-02 16:04+0200\n"
-"PO-Revision-Date: 2018-07-17 22:00+0000\n"
+"PO-Revision-Date: 2018-07-18 07:49+0000\n"
 "Last-Translator: Yunus Fırat Pişkin <firat.piskin@idvlabs.com>\n"
 "Language-Team: Turkish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-wirecard/tr/>\n"
@@ -140,18 +140,18 @@ msgstr ""
 "Litvanya, Türkiye)"
 
 #: pretix_wirecard/payment.py:210
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Order {event}-{code}"
-msgstr "Sipariş {event} - {code}"
+msgstr "Sipariş {event}-{code}"
 
 #: pretix_wirecard/payment.py:233
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "ORDER {order} EVENT {event} BY {organizer}"
-msgstr "SİPARİŞ {order} ETKİNLİK {event} BY {organizer}"
+msgstr "SİPARİŞ {order} ETKİNLİK {event} TARAFINDAN {organizer}"
 
 #: pretix_wirecard/payment.py:239
 msgid "Order {} for event {} by {}"
-msgstr ""
+msgstr "Sipariş {} etkinlik için {} tarafından {}"
 
 #: pretix_wirecard/payment.py:310
 #, python-brace-format
@@ -204,11 +204,11 @@ msgstr "e-hesap"
 
 #: pretix_wirecard/payment.py:391
 msgid "ePay.bg via Wirecard"
-msgstr ""
+msgstr "ePay.bg Wirecard ile"
 
 #: pretix_wirecard/payment.py:392
 msgid "ePay.bg"
-msgstr ""
+msgstr "ePay.bg"
 
 #: pretix_wirecard/payment.py:400
 msgid "eps-Ueberweisung via Wirecard"
@@ -271,7 +271,6 @@ msgid "TatraPay"
 msgstr "TatraPay"
 
 #: pretix_wirecard/payment.py:472
-#, fuzzy
 msgid "Trustly via Wirecard"
 msgstr "Wirecard ile güvenilir bir şekilde"
 
@@ -344,14 +343,14 @@ msgstr ""
 "yapılmayacaktır."
 
 #: pretix_wirecard/templates/pretix_wirecard/action_overpaid.html:5
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The Wirecard transaction %(payment)s has succeeded, but the order %(order)s "
 "is expired and the product was sold out in the meantime. Therefore, the "
 "payment could not be acceped. Please contact the user and refund the money "
 "via Wirecard's interface."
 msgstr ""
-"Wirecard işlemi %(payment) başarılı oldu, ancak siparişin %(order) süresi "
+"Wirecard işlemi% (ödeme)s başardı, ancak% (sipariş)s siparişinin süresi "
 "doldu ve bu sırada ürün satıldı. Bu nedenle, ödeme alınamadı. Lütfen "
 "kullanıcıyla iletişime geçin ve Wirecard'ın arayüzü ile parayı iade edin."
 
@@ -366,7 +365,7 @@ msgstr ""
 
 #: pretix_wirecard/templates/pretix_wirecard/checkout_payment_form.html:9
 msgid "You need to turn on JavaScript for this payment method to work."
-msgstr ""
+msgstr "Çalışmak için bu ödeme yöntemi için JavaScript'i açmanız gerekir."
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:5
 #, python-format
@@ -374,12 +373,12 @@ msgid "This order has been paid with %(provname)s."
 msgstr "Bu sipariş %(provname) ile ödenmiştir."
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:9
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This order has been planned to be paid with %(provname)s and has been marked "
 "as refunded."
 msgstr ""
-"Bu siparişin %(provname) ile ödenmesi planlandı ve iade edildi olarak "
+"Bu siparişin %(provname)s ile ödenmesi planlandı ve iade edildi olarak "
 "işaretlendi."
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:13
