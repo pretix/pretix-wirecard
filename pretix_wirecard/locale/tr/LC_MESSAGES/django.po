@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-02 16:04+0200\n"
-"PO-Revision-Date: 2018-07-18 07:49+0000\n"
+"PO-Revision-Date: 2018-07-18 20:00+0000\n"
 "Last-Translator: Yunus Fırat Pişkin <firat.piskin@idvlabs.com>\n"
 "Language-Team: Turkish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-wirecard/tr/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:27
 msgid "Refund automatically?"
-msgstr "Otomatik olarak iade?"
+msgstr "Otomatik geri ödeme?"
 
 #: pretix_wirecard/payment.py:29
 msgid "Automatically refund charge with Wirecard"
@@ -339,7 +339,7 @@ msgid ""
 "This will remove payment-related history information. No download will be "
 "offered."
 msgstr ""
-"Bu ödeme ile ilgili geçmiş bilgileri kaldırılacaktır. Hiçbir indirme "
+"Bu ödeme ile ilgili geçmiş bilgilerini kaldıracaktır. Hiçbir indirme "
 "yapılmayacaktır."
 
 #: pretix_wirecard/templates/pretix_wirecard/action_overpaid.html:5
@@ -518,4 +518,4 @@ msgid ""
 "your emails to continue."
 msgstr ""
 "Üzgünüz, ödeme sürecinde bir hata oluştu. Devam etmek için lütfen e-"
-"postanızdaki bağlantıyı kontrol edin."
+"postalarınızdaki bağlantıyı kontrol edin."
