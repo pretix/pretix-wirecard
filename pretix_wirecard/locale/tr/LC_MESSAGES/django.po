@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-02 16:04+0200\n"
-"PO-Revision-Date: 2018-07-18 20:00+0000\n"
+"PO-Revision-Date: 2018-07-19 14:00+0000\n"
 "Last-Translator: Yunus Fırat Pişkin <firat.piskin@idvlabs.com>\n"
 "Language-Team: Turkish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-wirecard/tr/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:27
 msgid "Refund automatically?"
-msgstr "Otomatik geri ödeme?"
+msgstr "Otomatik iade?"
 
 #: pretix_wirecard/payment.py:29
 msgid "Automatically refund charge with Wirecard"
@@ -40,7 +40,7 @@ msgstr "Wirecard Ödeme Sayfası"
 
 #: pretix_wirecard/payment.py:48
 msgid "Customer ID"
-msgstr "Müşteri Kimliği"
+msgstr "Müşteri kimliği"
 
 #: pretix_wirecard/payment.py:52
 msgid "Secret"
@@ -441,8 +441,8 @@ msgid ""
 "Our attempt to execute your payment has failed. Please try again or contact "
 "us."
 msgstr ""
-"Ödemenizi gerçekleştirme girişimimiz başarısız oldu. Lütfen tekrar deneyin "
-"veya bizimle iletişime geçin."
+"Ödeme gerçekleştirme girişimimiz başarısız oldu. Lütfen tekrar deneyin veya "
+"bizimle iletişime geçin."
 
 #: pretix_wirecard/templates/pretix_wirecard/pending.html:8
 msgid ""
@@ -491,7 +491,7 @@ msgstr ""
 #: pretix_wirecard/views.py:117
 msgid "The payment process was canceled. You can click below to try again."
 msgstr ""
-"Ödeme işlemi iptal edildi. Tekrar denemek için aşağıya tıklayabilirsiniz."
+"Ödeme işlemi iptal edildi. Tekrar denemek için aşağıyı tıklayabilirsiniz."
 
 #: pretix_wirecard/views.py:122
 #, python-brace-format
@@ -508,7 +508,7 @@ msgid ""
 "We will send you an email once your payment is completed. If this takes "
 "longer than expected, contact the event organizer."
 msgstr ""
-"Ödemeniz işleme başladı ve tamamlanması biraz zaman alacak. Ödemeniz "
+"Ödeme işleminiz başladı ve tamamlanması biraz zaman alacak. Ödemeniz "
 "tamamlandığında size bir e-posta göndereceğiz. Bu beklenenden uzun sürerse "
 "etkinlik düzenleyicisine başvurun."
 
