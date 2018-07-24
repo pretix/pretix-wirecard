@@ -8,29 +8,19 @@ from urllib.parse import parse_qs
 import requests
 from django import forms
 from django.contrib import messages
+from django.http import HttpRequest
 from django.template.loader import get_template
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
+from typing import Union
 
-from pretix.base.models import Event, Order
+from pretix.base.models import Event, Order, OrderPayment, OrderRefund
 from pretix.base.payment import BasePaymentProvider, PaymentException
 from pretix.base.services.orders import mark_order_refunded
 from pretix.base.settings import SettingsSandbox
 from pretix.multidomain.urlreverse import eventreverse, build_absolute_uri
 
 logger = logging.getLogger(__name__)
-
-
-class RefundForm(forms.Form):
-    auto_refund = forms.ChoiceField(
-        initial='auto',
-        label=_('Refund automatically?'),
-        choices=(
-            ('auto', _('Automatically refund charge with Wirecard')),
-            ('manual', _('Do not send refund instruction to Wirecard, only mark as refunded in pretix'))
-        ),
-        widget=forms.RadioSelect,
-    )
 
 
 class WirecardSettingsHolder(BasePaymentProvider):
@@ -141,8 +131,9 @@ class WirecardSettingsHolder(BasePaymentProvider):
 class WirecardMethod(BasePaymentProvider):
     method = ''
     wc_payment_type = 'SELECT'
-    statement_length = 253
+    statement_length = 32
     order_ref_length = 32
+    abort_pending_allowed = True
 
     def __init__(self, event: Event):
         super().__init__(event)
@@ -177,12 +168,14 @@ class WirecardMethod(BasePaymentProvider):
     def payment_is_valid_session(self, request):
         return True
 
-    def payment_perform(self, request, order) -> str:
+    def execute_payment(self, request: HttpRequest, payment: OrderPayment):
         request.session['wirecard_nonce'] = get_random_string(length=12)
-        request.session['wirecard_order_secret'] = order.secret
+        request.session['wirecard_order_secret'] = payment.order.secret
+        request.session['wirecard_payment'] = payment.pk
         return eventreverse(self.event, 'plugins:pretix_wirecard:redirect', kwargs={
-            'order': order.code,
-            'hash': hashlib.sha1(order.secret.lower().encode()).hexdigest(),
+            'order': payment.order.code,
+            'payment': payment.pk,
+            'hash': hashlib.sha1(payment.order.secret.lower().encode()).hexdigest(),
         })
 
     def sign_parameters(self, params: dict, order: list=None) -> dict:
@@ -194,96 +187,89 @@ class WirecardMethod(BasePaymentProvider):
         ).hexdigest().upper()
         return params
 
-    def params_for_order(self, order, request):
+    def params_for_payment(self, payment, request):
         if not request.session.get('wirecard_nonce'):
             request.session['wirecard_nonce'] = get_random_string(length=12)
-            request.session['wirecard_order_secret'] = order.secret
-        hash = hashlib.sha1(order.secret.lower().encode()).hexdigest()
+            request.session['wirecard_order_secret'] = payment.order.secret
+            request.session['wirecard_payment'] = payment.pk
+        hash = hashlib.sha1(payment.order.secret.lower().encode()).hexdigest()
         # TODO: imageURL, cssURL?
         return {
             'customerId': self.settings.get('customer_id'),
             'shopId': self.settings.get('shop_id', ''),
-            'language': order.locale[:2],
+            'language': payment.order.locale[:2],
             'paymentType': self.wc_payment_type,
-            'amount': str(order.total),
+            'amount': str(payment.amount),
             'currency': self.event.currency,
-            'orderDescription': _('Order {event}-{code}').format(event=self.event.slug.upper(), code=order.code),
+            'orderDescription': _('Order {event}-{code}').format(event=self.event.slug.upper(), code=payment.order.code),
             'successUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:return', kwargs={
-                'order': order.code,
+                'order': payment.order.code,
+                'payment': payment.pk,
                 'hash': hash,
             }),
             'cancelUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:return', kwargs={
-                'order': order.code,
+                'order': payment.order.code,
+                'payment': payment.pk,
                 'hash': hash,
             }),
             'failureUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:return', kwargs={
-                'order': order.code,
+                'order': payment.order.code,
+                'payment': payment.pk,
                 'hash': hash,
             }),
             'confirmUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:confirm', kwargs={
-                'order': order.code,
+                'order': payment.order.code,
+                'payment': payment.pk,
                 'hash': hash,
             }).replace(':8000', ''),  # TODO: Remove
             'pendingUrl': build_absolute_uri(self.event, 'plugins:pretix_wirecard:confirm', kwargs={
-                'order': order.code,
+                'order': payment.order.code,
+                'payment': payment.pk,
                 'hash': hash,
             }),
             'duplicateRequestCheck': 'yes',
             'serviceUrl': self.event.settings.imprint_url,
-            'customerStatement': _('ORDER {order} EVENT {event} BY {organizer}').format(
-                event=self.event.slug.upper(), order=order.code, organizer=self.event.organizer.name
-            )[:self.statement_length],
+            'customerStatement': str(_('ORDER {order} EVENT {event} BY {organizer}')).format(
+                event=self.event.slug.upper(), order=payment.order.code, organizer=self.event.organizer.name
+            )[:self.statement_length - 1],
             'orderReference': '{code}{id}'.format(
-                code=order.code, id=request.session.get('wirecard_nonce')
-            )[:self.order_ref_length],
+                code=payment.order.code, id=request.session.get('wirecard_nonce')
+            )[:self.order_ref_length - 1],
             'displayText': _('Order {} for event {} by {}').format(
-                order.code, self.event.name, self.event.organizer.name
+                payment.order.code, self.event.name, self.event.organizer.name
             ),
-            'pretix_orderCode': order.code,
+            'pretix_orderCode': payment.order.code,
             'pretix_eventSlug': self.event.slug,
             'pretix_organizerSlug': self.event.organizer.slug,
             'pretix_nonce': request.session.get('wirecard_nonce'),
         }
 
-    def order_pending_render(self, request, order) -> str:
+    def payment_pending_render(self, request: HttpRequest, payment: OrderPayment):
         retry = True
         try:
-            if order.payment_info and json.loads(order.payment_info)['paymentState'] == 'PENDING':
+            if payment.info_data['paymentState'] == 'PENDING':
                 retry = False
         except KeyError:
             pass
         template = get_template('pretix_wirecard/pending.html')
         ctx = {'request': request, 'event': self.event, 'settings': self.settings,
-               'retry': retry, 'order': order}
+               'retry': retry, 'order': payment.order}
         return template.render(ctx)
 
-    def order_control_render(self, request, order) -> str:
-        if order.payment_info:
-            payment_info = json.loads(order.payment_info)
-        else:
-            payment_info = None
+    def payment_control_render(self, request: HttpRequest, payment: OrderPayment):
         template = get_template('pretix_wirecard/control.html')
         ctx = {'request': request, 'event': self.event, 'settings': self.settings,
-               'payment_info': payment_info, 'order': order, 'provname': self.verbose_name}
+               'payment_info': payment.info_data, 'order': payment.order, 'provname': self.verbose_name}
         return template.render(ctx)
 
     def order_can_retry(self, order):
         return True
 
-    @property
-    def refund_available(self):
+    def payment_partial_refund_supported(self, payment: OrderPayment):
         return bool(self.settings.get('toolkit_password'))
 
-    def order_control_refund_render(self, order, request) -> str:
-        if self.refund_available:
-            template = get_template('pretix_wirecard/control_refund.html')
-            ctx = {
-                'request': request,
-                'form': self._refund_form(request),
-            }
-            return template.render(ctx)
-        else:
-            return super().order_control_refund_render(order, request)
+    def payment_refund_supported(self, payment: OrderPayment):
+        return bool(self.settings.get('toolkit_password'))
 
     def _refund(self, order_number, amount, currency, language):
         params = {
@@ -309,48 +295,20 @@ class WirecardMethod(BasePaymentProvider):
             logger.error('Wirecard error during refund: %s' % r.text)
             raise PaymentException(_('Wirecard reported an error: {msg}').format(msg=retvals['message'][0]))
 
-    def _refund_form(self, request):
-        return RefundForm(data=request.POST if request.method == "POST" else None)
-
-    def order_control_refund_perform(self, request, order) -> "bool|str":
-        if order.payment_info:
-            payment_info = json.loads(order.payment_info)
-        else:
-            payment_info = None
-
-        if not payment_info or not self.refund_available:
-            mark_order_refunded(order, user=request.user)
-            messages.warning(request, _('We were unable to transfer the money back automatically. '
-                                        'Please get in touch with the customer and transfer it back manually.'))
-            return
-
-        f = self._refund_form(request)
-        if not f.is_valid():
-            messages.error(request, _('Your input was invalid, please try again.'))
-            return
-        elif f.cleaned_data.get('auto_refund') == 'manual':
-            order = mark_order_refunded(order, user=request.user)
-            order.payment_manual = True
-            order.save()
-            return
-
+    def execute_refund(self, refund: OrderRefund):
         try:
             self._refund(
-                payment_info['orderNumber'], order.total, self.event.currency, order.locale[:2]
+                refund.payment.info_data['orderNumber'], refund.amount, self.event.currency, refund.order.locale[:2]
             )
-        except PaymentException as e:
-            messages.error(request, str(e))
         except requests.exceptions.RequestException as e:
             logger.exception('Wirecard error: %s' % str(e))
-            messages.error(request, _('We had trouble communicating with Wirecard. Please try again and contact '
-                                      'support if the problem persists.'))
+            raise PaymentException(_('We had trouble communicating with Wirecard. Please try again and contact '
+                                     'support if the problem persists.'))
         else:
-            mark_order_refunded(order, user=request.user)
+            refund.done()
 
-    def shred_payment_info(self, order: Order):
-        if not order.payment_info:
-            return
-        d = json.loads(order.payment_info)
+    def shred_payment_info(self, obj: Union[OrderPayment, OrderRefund]):
+        d = obj.info_data
         new = {
             '_shreded': True
         }
@@ -358,8 +316,21 @@ class WirecardMethod(BasePaymentProvider):
                   'orderNumber', 'financialInstitution', 'message', 'mandateId', 'dueDate'):
             if k in d:
                 new[k] = d[k]
-        order.payment_info = json.dumps(new)
-        order.save(update_fields=['payment_info'])
+        obj.info_data = new
+        obj.save(update_fields=['info'])
+
+        for le in obj.order.all_logentries().filter(action_type="pretix_wirecard.wirecard.event").exclude(data=""):
+            d = le.parsed_data
+            new = {
+                '_shreded': True
+            }
+            for k in ('paymentState', 'amount', 'authenticated', 'paymentType', 'pretix_orderCode', 'currency',
+                      'orderNumber', 'financialInstitution', 'message', 'mandateId', 'dueDate'):
+                if k in d:
+                    new[k] = d[k]
+            le.data = json.dumps(new)
+            le.shredded = True
+            le.save(update_fields=['data', 'shredded'])
 
 
 class WirecardCC(WirecardMethod):
@@ -367,6 +338,7 @@ class WirecardCC(WirecardMethod):
     public_name = _('Credit card')
     method = 'cc'
     wc_payment_type = 'CCARD'
+    statement_length = 200
 
 
 class WirecardBancontact(WirecardMethod):
@@ -501,10 +473,10 @@ class WirecardPayPal(WirecardMethod):
     statement_length = 254
     order_ref_length = 128
 
-    def params_for_order(self, order, request):
-        params = super().params_for_order(order, request)
+    def params_for_payment(self, payment, request):
+        params = super().params_for_payment(payment, request)
         cnt = 0
-        for i, p in enumerate(order.positions.select_related('item', 'variation')):
+        for i, p in enumerate(payment.order.positions.select_related('item', 'variation')):
             params['basketItem{}ArticleNumber'.format(i + 1)] = str(p.item.pk) + ('-' + str(p.variation.pk) if p.variation else '')
             params['basketItem{}Name'.format(i + 1)] = (str(p.item) + (' - ' + str(p.variation) if p.variation else ''))[:128]
             params['basketItem{}Description'.format(i + 1)] = (str(p.item) + (' - ' + str(p.variation) if p.variation else ''))[:128]
