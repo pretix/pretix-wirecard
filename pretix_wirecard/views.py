@@ -1,12 +1,11 @@
 import hashlib
 import hmac
-import json
 import logging
 
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
@@ -15,8 +14,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
-from pretix.base.models import Order, Quota, RequiredAction
-from pretix.base.services.orders import mark_order_paid
+from pretix.base.models import Order, Quota, OrderPayment
 from pretix.multidomain.urlreverse import eventreverse
 
 logger = logging.getLogger('pretix_wirecard')
@@ -38,7 +36,15 @@ class WirecardOrderView:
 
     @cached_property
     def pprov(self):
-        return self.request.event.get_payment_providers()[self.order.payment_provider]
+        return self.payment.payment_provider
+
+    @property
+    def payment(self):
+        return get_object_or_404(
+            self.order.payments,
+            pk=self.kwargs['payment'],
+            provider__istartswith='wirecard',
+        )
 
 
 @method_decorator(xframe_options_exempt, 'dispatch')
@@ -47,7 +53,7 @@ class RedirectView(WirecardOrderView, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['params'] = self.pprov.sign_parameters(self.pprov.params_for_order(self.order, self.request))
+        ctx['params'] = self.pprov.sign_parameters(self.pprov.params_for_payment(self.payment, self.request))
         return ctx
 
 
@@ -69,40 +75,34 @@ def validate_fingerprint(request, prov):
     return fp == request.POST.get('responseFingerprint').upper()
 
 
-def process_result(request, order, prov):
-    order.payment_info = json.dumps(dict(request.POST.items()))
-    order.save()
-    if order.status in (Order.STATUS_PENDING, Order.STATUS_EXPIRED) and request.POST.get('paymentState') == 'SUCCESS':
-        try:
-            mark_order_paid(order, user=None, provider=prov.identifier)
-        except Quota.QuotaExceededException:
-            if not RequiredAction.objects.filter(event=request.event, action_type='pretix_wirecard.wirecard.overpaid',
-                                                 data__icontains=order.code).exists():
-                RequiredAction.objects.create(
-                    event=request.event, action_type='pretix_wirecard.wirecard.overpaid', data=json.dumps({
-                        'order': order.code,
-                        'charge': request.POST.get('orderNumber')
-                    })
-                )
+def process_result(request, payment, prov):
+    payment.info_data = dict(request.POST.items())
+    payment.save()
+    if payment.state in (
+            OrderPayment.PAYMENT_STATE_PENDING, OrderPayment.PAYMENT_STATE_CREATED
+    ) and request.POST.get('paymentState') == 'SUCCESS':
+        payment.confirm()
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class ConfirmView(WirecardOrderView, View):
     def post(self, request, *args, **kwargs):
         if not validate_fingerprint(request, self.pprov):
             raise PermissionDenied('<QPAY-CONFIRMATION-RESPONSE result="NOK" message="Invalid fingerprint." />')
         self.order.log_action('pretix_wirecard.wirecard.event', data=dict(request.POST.items()))
-        process_result(request, self.order, self.pprov)
+        try:
+            process_result(request, self.payment, self.pprov)
+        except Quota.QuotaExceededException:
+            pass
         return HttpResponse('<QPAY-CONFIRMATION-RESPONSE result="OK" />')
 
 
 @method_decorator(csrf_exempt, name='dispatch')
 @method_decorator(xframe_options_exempt, 'dispatch')
 class ReturnView(WirecardOrderView, View):
-
     def get(self, request, *args, **kwargs):
         messages.error(
-            request, _('The payment failed without an error message. '
-                            'You can click below to try again.')
+            request, _('The payment failed without an error message. You can click below to try again.')
         )
         return self._redirect_to_order()
 
@@ -131,7 +131,10 @@ class ReturnView(WirecardOrderView, View):
             )
             return self._redirect_to_order()
 
-        process_result(request, self.order, self.pprov)
+        try:
+            process_result(request, self.payment, self.pprov)
+        except Quota.QuotaExceededException as e:
+            messages.error(request, str(e))
         return self._redirect_to_order()
 
     def _redirect_to_order(self):
