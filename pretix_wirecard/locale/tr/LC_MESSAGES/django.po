@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-06 12:33+0200\n"
-"PO-Revision-Date: 2018-08-17 17:00+0000\n"
+"PO-Revision-Date: 2018-08-31 16:00+0000\n"
 "Last-Translator: Yunus Fırat Pişkin <firat.piskin@idvlabs.com>\n"
 "Language-Team: Turkish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-wirecard/tr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #: pretix_wirecard/payment.py:28
 msgid "Wirecard Checkout Page"
@@ -29,7 +29,7 @@ msgstr "Müşteri kimliği"
 
 #: pretix_wirecard/payment.py:42
 msgid "Secret"
-msgstr "Gizli"
+msgstr "Sır"
 
 #: pretix_wirecard/payment.py:46
 msgid "Shop ID"
@@ -369,7 +369,7 @@ msgstr "kart sahibi"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:41
 msgid "Payer"
-msgstr "ödeyici"
+msgstr "Ödeyici"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:45
 msgid "Mandate ID"
