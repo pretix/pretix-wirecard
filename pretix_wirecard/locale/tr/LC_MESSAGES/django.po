@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-06 12:33+0200\n"
-"PO-Revision-Date: 2018-08-31 16:00+0000\n"
+"PO-Revision-Date: 2018-09-01 19:00+0000\n"
 "Last-Translator: Yunus Fırat Pişkin <firat.piskin@idvlabs.com>\n"
 "Language-Team: Turkish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-wirecard/tr/>\n"
@@ -165,7 +165,7 @@ msgstr "Wirecard üzerinden yasak iletişim"
 
 #: pretix_wirecard/payment.py:346
 msgid "Bancontact"
-msgstr "Yasak iletişim"
+msgstr "Bancontact"
 
 #: pretix_wirecard/payment.py:354
 msgid "eKonto via Wirecard"
@@ -285,7 +285,7 @@ msgstr "SOFORT"
 
 #: pretix_wirecard/signals.py:50
 msgid "Charge succeeded."
-msgstr "Yükleme başarılı oldu."
+msgstr "Ücret başarılı oldu."
 
 #: pretix_wirecard/signals.py:51
 msgid "Charge pending."
