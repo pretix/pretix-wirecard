@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-06 12:33+0200\n"
-"PO-Revision-Date: 2018-09-01 19:00+0000\n"
+"PO-Revision-Date: 2018-09-03 05:59+0000\n"
 "Last-Translator: Yunus Fırat Pişkin <firat.piskin@idvlabs.com>\n"
 "Language-Team: Turkish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-wirecard/tr/>\n"
@@ -329,10 +329,8 @@ msgid "You need to turn on JavaScript for this payment method to work."
 msgstr "Çalışmak için bu ödeme yöntemi için JavaScript'i açmanız gerekir."
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:5
-#, fuzzy
-#| msgid "Payment state"
 msgid "Payment backend"
-msgstr "Ödeme durumu"
+msgstr "Arka planda ödeme"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:8
 msgid "Payment type"
