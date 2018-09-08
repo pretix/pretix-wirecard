@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-06 12:33+0200\n"
-"PO-Revision-Date: 2018-08-28 14:00+0000\n"
+"PO-Revision-Date: 2018-09-11 16:05+0000\n"
 "Last-Translator: oocf <oswaldocerna@gmail.com>\n"
 "Language-Team: Spanish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-wirecard/es/>\n"
@@ -29,7 +29,7 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:42
 msgid "Secret"
-msgstr ""
+msgstr "Secreto"
 
 #: pretix_wirecard/payment.py:46
 msgid "Shop ID"
@@ -45,7 +45,7 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:57
 msgid "Credit card payments"
-msgstr ""
+msgstr "Pagos con tarjeta de crédito"
 
 #: pretix_wirecard/payment.py:62
 msgid "Bancontact / Mister Cash (Belgium)"
@@ -77,7 +77,7 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:91 pretix_wirecard/payment.py:470
 msgid "PayPal"
-msgstr ""
+msgstr "PayPal"
 
 #: pretix_wirecard/payment.py:93 pretix_wirecard/payment.py:461
 msgid "paysafecard"
@@ -158,7 +158,7 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:346
 msgid "Bancontact"
-msgstr ""
+msgstr "Bancontact"
 
 #: pretix_wirecard/payment.py:354
 msgid "eKonto via Wirecard"
@@ -190,7 +190,7 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:382
 msgid "giropay"
-msgstr ""
+msgstr "giropay"
 
 #: pretix_wirecard/payment.py:390
 msgid "iDEAL via Wirecard"
@@ -198,7 +198,7 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:391
 msgid "iDEAL"
-msgstr ""
+msgstr "IDEAL"
 
 #: pretix_wirecard/payment.py:399
 msgid "moneta.ru via Wirecard"
@@ -274,11 +274,11 @@ msgstr ""
 
 #: pretix_wirecard/payment.py:504
 msgid "SOFORT"
-msgstr ""
+msgstr "SOFORT"
 
 #: pretix_wirecard/signals.py:50
 msgid "Charge succeeded."
-msgstr ""
+msgstr "La carga tuvo éxito."
 
 #: pretix_wirecard/signals.py:51
 msgid "Charge pending."
@@ -349,7 +349,7 @@ msgstr ""
 #: pretix_wirecard/templates/pretix_wirecard/control.html:30
 #: pretix_wirecard/templates/pretix_wirecard/control.html:33
 msgid "Card number"
-msgstr ""
+msgstr "Número de tarjeta"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:37
 msgid "Card holder"
@@ -357,7 +357,7 @@ msgstr ""
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:41
 msgid "Payer"
-msgstr ""
+msgstr "Pagador"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:45
 msgid "Mandate ID"
@@ -434,3 +434,5 @@ msgid ""
 "Sorry, there was an error in the payment process. Please check the link in "
 "your emails to continue."
 msgstr ""
+"Lo sentimos, hubo un error en el proceso de pago. Por favor, compruebe el "
+"enlace en sus correos electrónicos para continuar."
