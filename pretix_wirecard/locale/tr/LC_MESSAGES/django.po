@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-06 12:33+0200\n"
-"PO-Revision-Date: 2018-08-06 14:37+0000\n"
-"Last-Translator: Raphael Michel <michel@rami.io>\n"
+"PO-Revision-Date: 2018-09-03 05:59+0000\n"
+"Last-Translator: Yunus Fırat Pişkin <firat.piskin@idvlabs.com>\n"
 "Language-Team: Turkish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-wirecard/tr/>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #: pretix_wirecard/payment.py:28
 msgid "Wirecard Checkout Page"
@@ -29,7 +29,7 @@ msgstr "Müşteri kimliği"
 
 #: pretix_wirecard/payment.py:42
 msgid "Secret"
-msgstr "Gizli"
+msgstr "Sır"
 
 #: pretix_wirecard/payment.py:46
 msgid "Shop ID"
@@ -165,7 +165,7 @@ msgstr "Wirecard üzerinden yasak iletişim"
 
 #: pretix_wirecard/payment.py:346
 msgid "Bancontact"
-msgstr "Yasak iletişim"
+msgstr "Bancontact"
 
 #: pretix_wirecard/payment.py:354
 msgid "eKonto via Wirecard"
@@ -285,7 +285,7 @@ msgstr "SOFORT"
 
 #: pretix_wirecard/signals.py:50
 msgid "Charge succeeded."
-msgstr "Yükleme başarılı oldu."
+msgstr "Ücret başarılı oldu."
 
 #: pretix_wirecard/signals.py:51
 msgid "Charge pending."
@@ -329,10 +329,8 @@ msgid "You need to turn on JavaScript for this payment method to work."
 msgstr "Çalışmak için bu ödeme yöntemi için JavaScript'i açmanız gerekir."
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:5
-#, fuzzy
-#| msgid "Payment state"
 msgid "Payment backend"
-msgstr "Ödeme durumu"
+msgstr "Arka planda ödeme"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:8
 msgid "Payment type"
@@ -348,7 +346,7 @@ msgstr "Ödeme durumu"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:18
 msgid "Amount"
-msgstr "Tutar"
+msgstr "Miktar"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:22
 msgid "Message"
@@ -369,7 +367,7 @@ msgstr "kart sahibi"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:41
 msgid "Payer"
-msgstr "ödeyici"
+msgstr "Ödeyici"
 
 #: pretix_wirecard/templates/pretix_wirecard/control.html:45
 msgid "Mandate ID"
