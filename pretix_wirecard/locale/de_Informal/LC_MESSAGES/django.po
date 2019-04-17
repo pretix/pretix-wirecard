@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-06 12:33+0200\n"
-"PO-Revision-Date: 2018-08-07 13:46+0000\n"
+"PO-Revision-Date: 2019-04-17 18:00+0000\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: German (informal) <https://translate.pretix.eu/projects/"
 "pretix/pretix-plugin-wirecard/de_Informal/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.5.1\n"
 
 #: pretix_wirecard/payment.py:28
 msgid "Wirecard Checkout Page"
@@ -20,7 +20,7 @@ msgstr "Wirecard Checkout Page"
 
 #: pretix_wirecard/payment.py:38
 msgid "Customer ID"
-msgstr "Kundennummer"
+msgstr "Kunden-ID"
 
 #: pretix_wirecard/payment.py:42
 msgid "Secret"
