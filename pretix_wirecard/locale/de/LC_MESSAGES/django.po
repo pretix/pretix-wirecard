@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-06 12:33+0200\n"
-"PO-Revision-Date: 2018-08-07 13:46+0000\n"
-"Last-Translator: Raphael Michel <michel@rami.io>\n"
+"PO-Revision-Date: 2020-07-16 22:00+0000\n"
+"Last-Translator: Dennis Lichtenthäler <lichtenthaeler@rami.io>\n"
 "Language-Team: German <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-wirecard/de/>\n"
 "Language: de\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: pretix_wirecard/payment.py:28
 msgid "Wirecard Checkout Page"
@@ -40,7 +40,7 @@ msgstr "Optional. Benötigt, um automatisch Rückbuchungen einzuleiten."
 
 #: pretix_wirecard/payment.py:57
 msgid "Credit card payments"
-msgstr "Kreditkartenzahlung"
+msgstr "Kreditkartenzahlungen"
 
 #: pretix_wirecard/payment.py:62
 msgid "Bancontact / Mister Cash (Belgium)"
